@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="75dp"
+    android:layout_width="match_parent"
+    android:background="#eeeee0"
+    android:elevation="5dp"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:id="@+id/keyView"
+        android:text="key1"
+        android:textSize="15dp"
+        android:layout_gravity="center|left"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/valView"
+        android:text="value1"
+        android:textSize="15dp"
+        android:layout_gravity="center|right"
+        />
+
+
+</FrameLayout>
