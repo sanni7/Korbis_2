@@ -2,10 +2,29 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="15dp"
+    android:elevation="7dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eeeee0"
     tools:context="com.tbc_hackathon.dailyhunt.korbis_2.UploadActivity">
+
+    <com.apg.mobile.roundtextview.BadgeView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:id="@+id/msg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mainAllCorner="30dp"
+        app:mainBgColor="#598dd0"
+        app:mainText="Click a pic!"
+        app:subAllCorner="30dp"
+        />
 
     <ImageView
         android:id="@+id/mImageView"
@@ -13,7 +32,7 @@
         android:layout_height="225dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/add_camera"
+        android:src="@drawable/cam"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,15 +40,14 @@
         android:id="@+id/next"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="28dp"
         android:backgroundTint="#1E9D96"
         android:text="Next"
         android:textColor="@android:color/background_light"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="32dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 

@@ -1,6 +1,9 @@
 package com.tbc_hackathon.dailyhunt.korbis_2;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -14,12 +17,20 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+
+import com.apg.mobile.roundtextview.BadgeView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -118,8 +129,23 @@ public class UploadActivity extends AppCompatActivity {
             File file = new File(imageUri.getPath());
             try {
                 InputStream ims = new FileInputStream(file);
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int width = displayMetrics.widthPixels;
+
                 ImageView imageView = (ImageView)findViewById(R.id.mImageView);
-                imageView.setImageBitmap(BitmapFactory.decodeStream(ims));
+                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)imageView.getLayoutParams();
+                lp.height = lp.height*2;
+                imageView.setLayoutParams(lp);
+
+
+                int height = (width*imageView.getHeight())/imageView.getWidth();
+                Bitmap bm = BitmapFactory.decodeStream(ims);
+                imageView.setImageBitmap(bm);
+                //imageView.setImageBitmap(Bitmap.createScaledBitmap(bm,width,height,true));
+                BadgeView bv = (BadgeView)findViewById(R.id.msg);
+                bv.setBadgeMainText("Here's your pic!");
+
             } catch (FileNotFoundException e) {
                 return;
             }

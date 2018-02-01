@@ -37,10 +37,4 @@
     <include layout="@layout/content_get_tags" />
 
 
-
-
-
-
-
-
 </android.support.design.widget.CoordinatorLayout>

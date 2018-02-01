@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:id="@+id/tagging">
+
+    <TextView
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:text="Add your tags:"
+        />
+
+    <TextView
+        android:id="@+id/tags_tv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="15dp"
+        android:background="#DDF5FB"
+        android:padding="6dp"
+        android:textColor="#020202"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        >
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/tag_editT"/>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:text="Add"
+            android:id="@+id/tag_addBtn"
+            android:textSize="15sp"
+            android:backgroundTint="#1E9D96"
+            android:textColor="@android:color/background_light" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -29,5 +29,6 @@ dependencies {
     implementation files('libs/httpmime-4.1.1.jar')
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.jaredrummler:android-device-names:1.1.5'
+    compile 'com.github.apg-mobile:android-round-textview:v1.0.0'
 
 }

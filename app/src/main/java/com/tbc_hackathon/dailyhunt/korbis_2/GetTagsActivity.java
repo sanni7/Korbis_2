@@ -69,11 +69,11 @@ public class GetTagsActivity extends AppCompatActivity implements LocationListen
 
     Uri imageUri;
     LocationManager mLocationManager;
-    EditText key, val;
+    EditText tag;
     LinearLayout parent;
-    View plus,submit;
-    int im_id=0;
-    String tags;
+    Button addBtn;
+    TextView tagView;
+    String tags="";
     HashMap<String, String> implicitTags = new HashMap<>();
 
 
@@ -112,10 +112,10 @@ public class GetTagsActivity extends AppCompatActivity implements LocationListen
             }
 
             //implicitTags.put("address",addresses.get(0).getAddressLine(0));// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            implicitTags.put("city",addresses.get(0).getLocality()); Log.e("City",implicitTags.get("city"));
-            implicitTags.put("state",addresses.get(0).getAdminArea()); Log.e("State",implicitTags.get("state"));
-            implicitTags.put("country",addresses.get(0).getCountryName()); Log.e("Country",implicitTags.get("country"));
-            implicitTags.put("postalCode",addresses.get(0).getPostalCode());
+            implicitTags.put("City",addresses.get(0).getLocality()); Log.e("City",implicitTags.get("City"));
+            implicitTags.put("State",addresses.get(0).getAdminArea()); Log.e("State",implicitTags.get("State"));
+            implicitTags.put("Country",addresses.get(0).getCountryName()); Log.e("Country",implicitTags.get("Country"));
+            implicitTags.put("Postal Code",addresses.get(0).getPostalCode());
         }
         else
         {
@@ -123,69 +123,31 @@ public class GetTagsActivity extends AppCompatActivity implements LocationListen
         }
 
         //Obtaining Device details
-        implicitTags.put("deviceName", DeviceName.getDeviceName());
+        implicitTags.put("Device name", DeviceName.getDeviceName());
 
         //Obtaining time of capture
         Date d = new Date();
-        implicitTags.put("timeOfCapture", DateFormat.format("EEEE, MMMM d, yyyy, hh:mm:ss", d.getTime()).toString());
+        implicitTags.put("Capture time", DateFormat.format("EEEE,MMMM-d,yyyy,hh:mm:ss", d.getTime()).toString());
 
         //Obtaining hour of the day
-        implicitTags.put("hourOfTheDay",HourOfTheDayUtility.get());
+        implicitTags.put("Hour of capture",HourOfTheDayUtility.get());
 
         Log.e("See","Before population");
         populateImplicitTags();
 
-        ImageView dummy = (ImageView)findViewById(R.id.dummy);
-        submit = (Button)findViewById(R.id.sbm);
-        dummy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Toast.makeText(GetTagsActivity.this,"Clicked!!!", Toast.LENGTH_SHORT).show();
-                ((ViewManager)submit.getParent()).removeView(submit);
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View custom = inflater.inflate(R.layout.user_tag_card,null);
-                custom.setId(im_id);
-                parent.addView(custom);
-                submit = inflater.inflate(R.layout.submit_btn,null);
-                parent.addView(submit);
-                key = (EditText)custom.findViewById(R.id.keyEdit);
-                val = (EditText)custom.findViewById(R.id.valEdit);
-
-                //implicitTags.put(key.getText().toString(),val.getText().toString());
-
-
-
-                val.addTextChangedListener(new TextWatcher() {
-                    public void afterTextChanged(Editable s) {
-                        // you can call or do what you want with your EditText here
-                        Log.e("Working","Clicked!!");
-                        implicitTags.put(key.getText().toString(),val.getText().toString());
-                    }
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-
-
-            }
-        });
-
-        submit = (Button)findViewById(R.id.sbm);
-        submit.setOnClickListener(new View.OnClickListener() {
+        addBtn = (Button)parent.findViewById(R.id.tag_addBtn);
+        tagView = (TextView)parent.findViewById(R.id.tags_tv);
+        tag = (EditText)parent.findViewById(R.id.tag_editT);
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(GetTagsActivity.this,"Clicked submit!!",Toast.LENGTH_SHORT).show();
-                tags = null;
-                Iterator it = implicitTags.entrySet().iterator();
-                while (it.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    tags+=pair.getValue().toString()+" ";
-                }
-
-                new ServerUpload().execute();
+                tags+=tag.getText().toString()+" ";
+                tagView.setText(tagView.getText()+" #"+tag.getText().toString());
+                tag.setText("");
             }
         });
+
+
     }
 
     @Override
@@ -205,12 +167,14 @@ public class GetTagsActivity extends AppCompatActivity implements LocationListen
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(GetTagsActivity.this,"Clicked submit!!",Toast.LENGTH_SHORT).show();
-            tags = null;
             Iterator it = implicitTags.entrySet().iterator();
             while (it.hasNext())
             {
                 Map.Entry pair = (Map.Entry)it.next();
-                tags+=pair.getValue().toString()+" ";
+                if(pair.getValue()!=null && !pair.getValue().equals("null"))
+                {
+                    tags+=pair.getValue().toString()+" ";
+                }
             }
 
             new ServerUpload().execute();
@@ -226,12 +190,6 @@ public class GetTagsActivity extends AppCompatActivity implements LocationListen
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         parent = (LinearLayout)findViewById(R.id.parentView);
 
-        plus = inflater.inflate(R.layout.addbtn_icon,null);
-        submit = inflater.inflate(R.layout.submit_btn,null);
-        parent.addView(plus);
-        parent.addView(submit);
-
-
         while (it.hasNext())
         {
             Map.Entry pair = (Map.Entry)it.next();
@@ -240,18 +198,11 @@ public class GetTagsActivity extends AppCompatActivity implements LocationListen
             TextView valView = (TextView) custom.findViewById(R.id.valView);
             keyView.setText(pair.getKey().toString());
             valView.setText( pair.getValue().toString());
-            plus = (ImageView)findViewById(R.id.dummy);
-            submit = (Button)findViewById(R.id.sbm);
-            ((ViewManager)plus.getParent()).removeView(plus);
-            ((ViewManager)submit.getParent()).removeView(submit);
             parent.addView(custom);
             Log.d(pair.getKey().toString(),pair.getValue().toString());
-            //it.remove(); // avoids a ConcurrentModificationException
-            plus = inflater.inflate(R.layout.addbtn_icon,null);
-            submit = inflater.inflate(R.layout.submit_btn,null);
-            parent.addView(plus);
-            parent.addView(submit);
         }
+
+        parent.addView(inflater.inflate(R.layout.tags_add_view,null));
 
     }
 
