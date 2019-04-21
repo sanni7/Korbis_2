@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_main);
+	System.out.println("Testing SourceLog App!");
 
         new Handler().postDelayed(new Runnable() {
 
